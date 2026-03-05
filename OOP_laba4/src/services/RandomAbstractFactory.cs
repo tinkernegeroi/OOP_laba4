@@ -13,10 +13,9 @@ public class RandomAbstractFactory : AbstractFactory
     private static readonly string[] AirplaneModels =
         { "Boeing 737", "Airbus A320", "Superjet 100" };
 
-    private static readonly string[] Positions =
-        { "Пилот", "Диспетчер", "Инженер" };
-
     private readonly Random _random = new Random();
+
+    private readonly AirplaneFlyweightFactory _flyweightFactory = new();
 
     public Airport CreateAirport()
     {
@@ -33,11 +32,13 @@ public class RandomAbstractFactory : AbstractFactory
 
     public Airplane CreateAirplane()
     {
-        return new Airplane(
-            AirplaneModels[_random.Next(AirplaneModels.Length)],
-            _random.Next(100, 300),
-            _random.Next(2000, 8000)
-        );
+        var model = AirplaneModels[_random.Next(AirplaneModels.Length)];
+        var flyweight = _flyweightFactory.GetFlyweight(model);
+
+        var flightNumber = $"SU-{_random.Next(100, 999)}";
+        var destination = Locations[_random.Next(Locations.Length)];
+
+        return new Airplane(flyweight, flightNumber, destination);
     }
     
 }

@@ -11,12 +11,11 @@ public class PremiumAbstractFactory : AbstractFactory
         { "Дубай", "Сингапур", "Монако", "Цюрих" };
 
     private static readonly string[] AirplaneModels =
-        { "Boeing 787 Dreamliner", "Airbus A350", "Gulfstream G700", "Bombardier Global 8000" };
-
-    private static readonly string[] Positions =
-        { "Главный пилот", "VIP Диспетчер", "Авиаконструктор", "Технический директор" };
+        { "Boeing 787", "Airbus A350", "Gulfstream G700", "Bombardier Global 8000" };
 
     private readonly Random _random = new Random();
+    
+    private readonly AirplaneFlyweightFactory _flyweightFactory =  new AirplaneFlyweightFactory();
 
     public Airport CreateAirport()
     {
@@ -30,14 +29,15 @@ public class PremiumAbstractFactory : AbstractFactory
             employeesCount: _random.Next(2000, 10000)
         );
     }
-
+    
     public Airplane CreateAirplane()
     {
-        return new Airplane(
-            model: AirplaneModels[_random.Next(AirplaneModels.Length)],
-            capacity: _random.Next(250, 500),
-            rangeKm: _random.Next(10_000, 18_000)
-        );
+        var model = AirplaneModels[_random.Next(AirplaneModels.Length)];
+        var flyweight = _flyweightFactory.GetFlyweight(model);
+
+        var flightNumber = $"SU-{_random.Next(100, 999)}";
+        var destination = Locations[_random.Next(Locations.Length)];
+
+        return new Airplane(flyweight, flightNumber, destination);
     }
-    
 }
