@@ -15,7 +15,7 @@ public class PremiumAbstractFactory : AbstractFactory
 
     private readonly Random _random = new Random();
     
-    private readonly AirplaneFlyweightFactory _flyweightFactory =  new AirplaneFlyweightFactory();
+    private static readonly AirplaneFlyweightFactory _flyweightFactory =  new AirplaneFlyweightFactory();
 
     public Airport CreateAirport()
     {
@@ -40,4 +40,6 @@ public class PremiumAbstractFactory : AbstractFactory
 
         return new Airplane(flyweight, flightNumber, destination);
     }
+    
+    public static int FlyweightCacheSize => _flyweightFactory.CacheSize;
 }
