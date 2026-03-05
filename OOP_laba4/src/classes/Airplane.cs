@@ -2,19 +2,20 @@
 
 public class Airplane
 {
-    public string Model { get; set; }
-    public int Capacity { get; set; }
-    public double RangeKm { get; set; }
+    private readonly AirplaneFlyweight _flyweight;
+    
+    public string FlightNumber { get; }
+    public string Destination { get; }
 
-    public Airplane(string model, int capacity, double rangeKm)
+    public Airplane(AirplaneFlyweight flyweight, string flightNumber, string destination)
     {
-        Model = model;
-        Capacity = capacity;
-        RangeKm = rangeKm;
+        _flyweight = flyweight;
+        FlightNumber = flightNumber;
+        Destination = destination;
     }
 
     public override string ToString()
     {
-        return $"Самолет: {Model}, Вместимость: {Capacity}, Дальность: {RangeKm} км";
+        return _flyweight.GetInfo(flightNumber: FlightNumber, destination: Destination);
     }
 }
