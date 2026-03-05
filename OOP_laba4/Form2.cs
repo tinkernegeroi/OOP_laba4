@@ -46,4 +46,22 @@ public partial class Form2 : Form
         textBox_FactoryObj.Text += airport.ToString() + Environment.NewLine;
         textBox_FactoryObj.Text += airplane.ToString() + Environment.NewLine;
     }
+
+    private void button_Flyweight_Click(object sender, EventArgs e)
+    {
+        var contexts = new List<Airplane>();
+        
+        for (int i = 0; i < 10; i++)
+        {
+            contexts.Add(_factoryRnd.CreateAirplane());
+        }
+
+        textBox_Flyweight.Clear();
+        textBox_Flyweight.Text += $"Создано рейсов: {contexts.Count}\n" + Environment.NewLine;
+        textBox_Flyweight.Text += $"Уникальных шаблонов самолётов в кэше: " + 
+                                  $"{RandomAbstractFactory.FlyweightCacheSize}" + Environment.NewLine;
+
+        foreach (var ctx in contexts)
+            textBox_Flyweight.Text += ctx.ToString() + Environment.NewLine;
+    }
 }

@@ -156,6 +156,7 @@ partial class Form2
         button_Flyweight.TabIndex = 16;
         button_Flyweight.Text = "Flyweight demo";
         button_Flyweight.UseVisualStyleBackColor = true;
+        button_Flyweight.Click += button_Flyweight_Click;
         // 
         // Form2
         // 
