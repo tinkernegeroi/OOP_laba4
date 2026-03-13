@@ -6,13 +6,11 @@ namespace OOP_laba4;
 
 public partial class Form2 : Form
 {
-    private AirportCollection _list;
     
     private readonly AbstractFactory _factoryRnd = new RandomAbstractFactory();
     
     private readonly AbstractFactory _factoryPrem =  new PremiumAbstractFactory();
     
-    private ListEventListener _listener;
     public Form2()
     {
         InitializeComponent();
