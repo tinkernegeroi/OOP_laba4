@@ -4,14 +4,14 @@ using OOP_laba4.utils;
 
 namespace OOP_laba4;
 
-public partial class Form2 : Form
+public partial class MainForm : Form
 {
     
     private readonly AbstractFactory _factoryRnd = new RandomAbstractFactory();
     
     private readonly AbstractFactory _factoryPrem =  new PremiumAbstractFactory();
     
-    public Form2()
+    public MainForm()
     {
         InitializeComponent();
     }
