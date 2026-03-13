@@ -2,21 +2,48 @@
 
 namespace OOP_laba4.services;
 
+/// <summary>
+/// Конкретная реализация <see cref="AbstractFactory"/>, создающая объекты
+/// с произвольными характеристиками на основе реальных российских аэропортов
+/// и распространённых моделей самолётов.
+/// Использует паттерн Flyweight через <see cref="AirplaneFlyweightFactory"/>
+/// для разделения общих данных о моделях самолётов.
+/// </summary>
 public class RandomAbstractFactory : AbstractFactory
 {
-    private static readonly string[] Names = 
+    /// <summary>
+    /// Набор названий российских аэропортов для случайного выбора.
+    /// </summary>
+    private static readonly string[] Names =
         { "Шереметьево", "Домодедово", "Внуково", "Пулково", "Кольцово" };
-    
-    private static readonly string[] Locations = 
+
+    /// <summary>
+    /// Набор городов России для случайного выбора местоположения.
+    /// </summary>
+    private static readonly string[] Locations =
         { "Москва", "Санкт-Петербург", "Екатеринбург", "Казань", "Новосибирск" };
-    
+
+    /// <summary>
+    /// Набор популярных моделей самолётов для случайного выбора.
+    /// </summary>
     private static readonly string[] AirplaneModels =
         { "Boeing 737", "Airbus A320", "Superjet 100" };
 
+    /// <summary>
+    /// Генератор случайных чисел для выбора параметров создаваемых объектов.
+    /// </summary>
     private readonly Random _random = new Random();
 
+    /// <summary>
+    /// Общая фабрика легковесов, разделяемая всеми экземплярами <see cref="RandomAbstractFactory"/>.
+    /// </summary>
     private static readonly AirplaneFlyweightFactory _flyweightFactory = new();
 
+    /// <summary>
+    /// Создаёт и возвращает новый объект <see cref="Airport"/> со случайными характеристиками
+    /// в диапазонах, характерных для среднего аэропорта.
+    /// </summary>
+    /// <returns>Новый экземпляр <see cref="Airport"/> со случайными параметрами.</returns>
     public Airport CreateAirport()
     {
         return new Airport(
@@ -30,6 +57,11 @@ public class RandomAbstractFactory : AbstractFactory
         );
     }
 
+    /// <summary>
+    /// Создаёт и возвращает новый объект <see cref="Airplane"/> для случайно выбранной модели.
+    /// Легковес для выбранной модели берётся из общего кэша <see cref="_flyweightFactory"/>.
+    /// </summary>
+    /// <returns>Новый экземпляр <see cref="Airplane"/> с случайным рейсом и пунктом назначения.</returns>
     public Airplane CreateAirplane()
     {
         var model = AirplaneModels[_random.Next(AirplaneModels.Length)];
@@ -40,6 +72,10 @@ public class RandomAbstractFactory : AbstractFactory
 
         return new Airplane(flyweight, flightNumber, destination);
     }
-    
+
+    /// <summary>
+    /// Количество уникальных моделей самолётов, закэшированных фабрикой легковесов
+    /// для данного типа фабрики.
+    /// </summary>
     public static int FlyweightCacheSize => _flyweightFactory.CacheSize;
 }
